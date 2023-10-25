@@ -1,0 +1,10 @@
+@use "../../styles/variables.scss" as *;
+.footer {
+  background-color: $color-yellow;
+  color: #fff;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-display;
+}

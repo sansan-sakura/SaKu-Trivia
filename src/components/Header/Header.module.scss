@@ -1,0 +1,28 @@
+@use "../../styles/variables.scss" as *;
+
+.header {
+  min-height: 100px;
+  height: 160px;
+  background-color: $color-yellow;
+  color: #fff;
+  font-family: $font-display;
+
+  &_inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+.header h1 {
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.header nav {
+  font-size: 1.5rem;
+}
