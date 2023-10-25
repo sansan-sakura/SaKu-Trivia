@@ -81,7 +81,6 @@ const QuizProvider = ({ children }) => {
     if (error) dispatch({ type: "question/setError" });
     if (isLoading) dispatch({ type: "question/setIsLoading" });
     if (data) dispatch({ type: "question/setQuestions", payload: data.results });
-    console.log(data);
   }, [data, error, isLoading]);
 
   return (

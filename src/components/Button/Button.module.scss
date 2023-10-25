@@ -1,0 +1,17 @@
+@use "../../styles/variables.scss" as *;
+.button {
+  width: fit-content;
+  display: block;
+  margin: 60px auto;
+  padding: 10px 30px;
+  font-size: 20px;
+  background-color: $color-yellow;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: $color-yellow-light;
+  outline-offset: 2px;
+  outline: 4px solid $color-yellow-light;
+}
