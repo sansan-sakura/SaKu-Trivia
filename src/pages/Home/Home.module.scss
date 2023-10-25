@@ -1,2 +1,56 @@
+@use "../../styles/variables.scss" as *;
 .home_page {
+  padding-top: 60px;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-display;
+  color: $color-stone;
+}
+
+.iframe_wrapper {
+  height: 400px;
+  width: 600px;
+  position: relative;
+  z-index: 0;
+}
+
+.iframe,
+.cover {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.cover {
+  z-index: 1;
+}
+
+.h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+
+  margin-bottom: 60px;
+}
+
+.button {
+  width: fit-content;
+  display: block;
+  margin: 60px auto;
+  padding: 10px 30px;
+  font-size: 20px;
+  background-color: $color-yellow;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: $color-yellow-light;
+  outline-offset: 2px;
+  outline: 4px solid $color-yellow-light;
 }
