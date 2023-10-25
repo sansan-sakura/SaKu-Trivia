@@ -1,27 +1,17 @@
 import styles from "./Home.module.scss";
-import { Link } from "react-router-dom";
-import { useGifs } from "../../hooks/useGetData";
+import { Button } from "../../components/Button";
+import { Gifs } from "../../components/Gifs";
+import { Heading } from "../../components/Heading";
 import { gifsUrl as url } from "../../statics/chooseQuestion";
 export const Home = () => {
-  const { data, error, isLoading } = useGifs(url);
-  if (isLoading) return;
-  console.log(data.data);
-
   return (
     <section className={styles.home_page}>
       <div className={styles.inner_home}>
-        <h2 className={styles.h2}>Welcome to SaKu Trivia 🐲</h2>
+        <Heading>Welcome to SaKu Trivia 🐲</Heading>
         <div className={styles.iframe_wrapper}>
-          <iframe
-            className={styles.iframe}
-            src={data.data.embed_url}
-            allow="encrypted-media;"
-          ></iframe>
-          <div className={styles.cover}></div>
+          <Gifs url={url} />
         </div>
-        <Link className={styles.button} to="/Start">
-          Start
-        </Link>
+        <Button to="/Start">Start</Button>
       </div>
     </section>
   );

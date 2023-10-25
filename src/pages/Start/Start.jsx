@@ -2,36 +2,37 @@ import { useState } from "react";
 import styles from "./Start.module.scss";
 import { questionCategory as categories } from "../../statics/chooseQuestion";
 import { useQuiz } from "../../context/QuizContext";
-import { Link } from "react-router-dom";
+import { Button } from "../../components/Button";
+import { Heading } from "../../components/Heading";
 
 export function Start() {
   const { dispatch, category } = useQuiz();
   const [isChosen, setIsChosen] = useState(null);
 
-  function handleChoose(e) {
+  function handleChoose(id) {
     setIsChosen(true);
-    dispatch({ type: "question/category", payload: e.target.value });
+    dispatch({ type: "question/category", payload: id });
   }
 
   return (
     <section className={styles.start}>
-      <h2 className={styles.h2}>Choose the Category</h2>
-      <div className={styles.start_inner}>
-        {categories.map((cate, index) => (
-          <div key={cate.id} className={styles.btn_wrapper}>
-            <button
-              onClick={(e) => handleChoose(e)}
-              value={cate.id}
-              style={{
-                outline: isChosen && index === categories.indexOf(category) ? "pink 2px solid" : "",
-              }}
-            >
+      <Heading>Choose the Category</Heading>
+      <ul className={styles.start_inner}>
+        {categories.map((cate) => (
+          <li
+            key={cate.id}
+            className={styles.btn_wrapper}
+            style={{
+              outline: isChosen && cate.id === category ? "green 4px solid" : "",
+            }}
+          >
+            <button onClick={(e) => handleChoose(cate.id)} value={cate.id}>
               {cate.name}
             </button>
-          </div>
+          </li>
         ))}
-      </div>
-      {isChosen && <Link to="/Select">Next</Link>}
+      </ul>
+      {isChosen && <Button to="/Select">Next</Button>}
     </section>
   );
 }

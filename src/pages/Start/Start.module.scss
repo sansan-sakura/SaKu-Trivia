@@ -1,10 +1,10 @@
 @use "../../styles/variables.scss" as *;
 .start {
+  padding-top: 60px;
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
 
   &_inner {
@@ -17,14 +17,11 @@
   }
 }
 
-.h2 {
-  margin-bottom: 60px;
-}
-
 .btn_wrapper {
   width: 200px;
   height: 140px;
   border: 1px solid $color-yellow;
+  border-radius: 5px;
 
   & button {
     text-align: center;
@@ -35,5 +32,12 @@
     font-weight: 800;
     color: #fff;
     background-color: $color-yellow;
+    transition: all 0.3 ease;
+
+    &:hover {
+      background-color: $color-yellow-light;
+      outline-offset: 2px;
+      outline: 4px solid $color-yellow-light;
+    }
   }
 }
