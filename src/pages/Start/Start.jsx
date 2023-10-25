@@ -14,22 +14,24 @@ export function Start() {
   }
 
   return (
-    <div className={styles.start_page}>
-      {categories.map((cate, index) => (
-        <div key={cate.id}>
-          <button
-            onClick={(e) => handleChoose(e)}
-            value={cate.id}
-            style={{
-              outline: isChosen && index === categories.indexOf(category) ? "pink 2px solid" : "",
-            }}
-          >
-            {cate.name}
-          </button>
-        </div>
-      ))}
-
+    <section className={styles.start}>
+      <h2 className={styles.h2}>Choose the Category</h2>
+      <div className={styles.start_inner}>
+        {categories.map((cate, index) => (
+          <div key={cate.id} className={styles.btn_wrapper}>
+            <button
+              onClick={(e) => handleChoose(e)}
+              value={cate.id}
+              style={{
+                outline: isChosen && index === categories.indexOf(category) ? "pink 2px solid" : "",
+              }}
+            >
+              {cate.name}
+            </button>
+          </div>
+        ))}
+      </div>
       {isChosen && <Link to="/Select">Next</Link>}
-    </div>
+    </section>
   );
 }
