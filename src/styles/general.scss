@@ -1,0 +1,12 @@
+@use "./variables.scss" as *;
+
+.main {
+  font-family: $font-text;
+}
+
+.main_wrapper {
+  background-color: $color-light-stone;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
