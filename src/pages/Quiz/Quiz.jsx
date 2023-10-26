@@ -1,13 +1,30 @@
 import { useQuiz } from "../../context/QuizContext";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Heading } from "../../components/Heading";
+import he from "he";
 
 import styles from "./Quiz.module.scss";
+import { Button } from "../../components/Button/Button";
+import { ProgressBar } from "../../components/ProgressBar";
 
 export const Quiz = () => {
   const navigate = useNavigate();
-  const { questions, fetchError, loading, dispatch, currentQuestionIndex } = useQuiz();
-  const [isCorrect, setIsCorrect] = useState(false);
+  const {
+    questions,
+    fetchError,
+    loading,
+    dispatch,
+    currentQuestionIndex,
+    currentQuestion,
+    howManyCorrects,
+    isCorrect,
+    isAnswered,
+    lastQuestion,
+  } = useQuiz();
+
+  const [isClicked, setIsClicked] = useState("");
+
   useEffect(() => {
     if (loading) return <p>Loading...</p>;
     if (fetchError.error) return <p>{fetchError.message}</p>;
@@ -15,90 +32,131 @@ export const Quiz = () => {
       alert("Sorry, couldn't find a sutable quiz.");
       return navigate("/Start");
     }
-  }, [questions, navigate, fetchError, loading]);
-  console.log(questions, currentQuestionIndex);
-  const { question, answers, correct_answer, incorrect_answers, type } =
-    questions[currentQuestionIndex];
+  }, [fetchError, loading, questions, navigate]);
+  const { question, correct_answer, incorrect_answers, type } = useMemo(() => {
+    const { question, correct_answer, incorrect_answers, type } = currentQuestion;
+    return { question, correct_answer, incorrect_answers, type };
+  }, [currentQuestion]);
 
   function handleCheckAnswer(option) {
-    console.log(option.target);
-    if (option === correct_answer) setIsCorrect(true);
-    dispatch({ type: "question/submitAnswer", payload: { ...question, option } });
-  }
+    if (isClicked === "") return alert("Please choose one");
+    else {
+      if (isClicked === correct_answer) {
+        dispatch({ type: "question/countCorrect" });
+      }
+      if (currentQuestionIndex === questions.length - 1)
+        dispatch({ type: "question/lastQuestion" });
 
+      dispatch({
+        type: "question/submitAnswer",
+        payload: { ...questions[currentQuestionIndex], option },
+      });
+    }
+  }
+  function handleClickSubmit() {
+    setIsClicked("");
+    dispatch({ type: "question/nextQuestion" });
+  }
   return (
-    <div className={styles.quiz_page}>
-      <div className={styles.inner_quiz}>
+    <div className={styles.quiz}>
+      <div className={styles.quiz_inner}>
+        <Heading>Quiz # {currentQuestionIndex + 1}</Heading>
+        <ProgressBar />
         <div className={styles.board}>
-          {isCorrect ? <p>Corrext</p> : <p>Not Correct</p>}
+          <h2>{he.decode(question)}</h2>
+
           {type === "boolean" ? (
-            <BooleanCard question={question} onCheckAnswer={handleCheckAnswer} />
+            <BooleanCard
+              setIsClicked={setIsClicked}
+              isCorrect={isCorrect}
+              isAnswered={isAnswered}
+              correct={correct_answer}
+              isClicked={isClicked}
+            />
           ) : (
             <MultipleCard
-              question={question}
               correct={correct_answer}
               incorrect={incorrect_answers}
-              onCheckAnswer={handleCheckAnswer}
+              setIsClicked={setIsClicked}
+              isCorrect={isCorrect}
+              isAnswered={isAnswered}
+              isClicked={isClicked}
             />
           )}
+          {isCorrect && (
+            <div className={styles.message_box}>
+              <p className={styles.correct_message}>Yeah! Crrect 🦄</p>
+            </div>
+          )}
+        </div>
+
+        {!isAnswered && <Button handleClick={handleCheckAnswer}>Show Answer</Button>}
+        {isAnswered && !lastQuestion && (
+          <Button handleClick={handleClickSubmit}>Next Question</Button>
+        )}
+        {lastQuestion && <Button to="/Result">Finish Quiz</Button>}
+        <div className={styles.countBox}>
+          <p>How many time you answered correctly : {howManyCorrects}</p>
         </div>
       </div>
     </div>
   );
 };
 
-function BooleanCard({ question, onCheckAnswer }) {
+function BooleanCard({ setIsClicked, isAnswered, correct, isClicked }) {
   return (
     <div className={styles.card}>
-      <h2>{question}</h2>
-      <ul>
-        <li value="True" onClick={(e) => onCheckAnswer(e.target.value)}>
-          True
+      <ul className={styles.boolean_cards}>
+        <li
+          className={`${styles.true} ${isAnswered && correct === "True" ? styles.correct : ""}`}
+          style={{ outline: isClicked === "True" ? " #7c2d12 solid 3px" : "" }}
+        >
+          <button value="True" onClick={(e) => setIsClicked(e.target.value)} disabled={isAnswered}>
+            True
+          </button>
         </li>
-        <li value="False" onClick={(e) => onCheckAnswer(e.target.value)}>
-          False
+        <li
+          className={`${styles.false} ${isAnswered && correct === "False" ? styles.correct : ""}`}
+          style={{ outline: isClicked === "False" ? " #7c2d12 solid 3px" : "" }}
+        >
+          <button value="False" onClick={(e) => setIsClicked(e.target.value)} disabled={isAnswered}>
+            False
+          </button>
         </li>
       </ul>
     </div>
   );
 }
 
-function MultipleCard({ question, correct, incorrect, onCheckAnswer }) {
-  const answers = [correct, ...incorrect];
-  const answerStartIndex = Math.floor(Math.random() * answers.length);
-  const unOrderedAnswers = [
-    ...answers.slice(0, answerStartIndex),
-    ...answers.slice(answerStartIndex),
-  ];
+function MultipleCard({ correct, incorrect, setIsClicked, isAnswered, isClicked }) {
+  const unOrderedAnswers = useMemo(() => {
+    const answers = [...incorrect, correct];
+    const answerStartIndex = Math.floor(Math.random() * answers.length);
+    return [...answers.slice(answerStartIndex), ...answers.slice(0, answerStartIndex)];
+  }, [correct, incorrect]);
   return (
     <div className={styles.card}>
-      <h2>{question}</h2>
-      <ul>
-        {unOrderedAnswers.map((answer) => (
-          <li key={answer} onClick={(e) => onCheckAnswer(e)} value={answer}>
-            {answer}
+      <ul className={styles.multiple_cards}>
+        {unOrderedAnswers.map((answer, index) => (
+          <li
+            className={` ${
+              isAnswered && index === unOrderedAnswers.indexOf(correct) ? styles.correct : ""
+            }`}
+            key={answer}
+            style={{
+              outline: isClicked === answer ? " #7c2d12 solid 3px" : "",
+            }}
+          >
+            <button
+              onClick={(e) => setIsClicked(e.target.value)}
+              value={answer}
+              disabled={isAnswered}
+            >
+              {he.decode(answer)}
+            </button>
           </li>
         ))}
       </ul>
     </div>
   );
 }
-
-// category
-// :
-// "Science: Computers"
-// correct
-// :
-// "Amazon"
-// difficulty
-// :
-// "medium"
-// incorrect_answers
-// :
-// (3) ['eBay', 'Overstock', 'Shopify']
-// question
-// :
-// "Which internet company began life as an online bookstore called &#039;Cadabra&#039;?"
-// type
-// :
-// "multiple"

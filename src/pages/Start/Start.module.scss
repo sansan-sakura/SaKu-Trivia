@@ -14,6 +14,7 @@
     align-items: center;
     justify-items: center;
     row-gap: 20px;
+    margin-top: 30px;
   }
 }
 
@@ -36,8 +37,6 @@
 
     &:hover {
       background-color: $color-yellow-light;
-      outline-offset: 2px;
-      outline: 4px solid $color-yellow-light;
     }
   }
 }

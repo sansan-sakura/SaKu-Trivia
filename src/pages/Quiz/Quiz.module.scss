@@ -1,0 +1,132 @@
+@use "../../styles/variables.scss" as *;
+
+.quiz {
+  &_inner {
+    padding-top: 30px;
+  }
+}
+
+.board {
+  font-size: 20px;
+  text-align: center;
+  font-family: $font-text;
+  margin: 0 auto;
+  width: 560px;
+  height: 400px;
+  padding: 20px 30px;
+  border: 2px solid #fff;
+  line-height: 1.8;
+  border-radius: 5px;
+
+  & h2 {
+    border: 1px solid #fff;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 22px;
+    padding: 6px 10px;
+  }
+
+  & ul {
+    margin-top: 20px;
+    display: grid;
+    gap: 5px;
+    height: 100%;
+  }
+
+  & button,
+  & li {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  & button:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.correct {
+  background: #e11d48 !important;
+}
+
+.true {
+  background-color: $color-pink;
+}
+
+.false {
+  background-color: $color-green-light;
+}
+
+.multiple_cards {
+  grid-template-rows: repeat(4, auto);
+
+  & li {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  & li:nth-child(2) {
+    background-color: $color-pink;
+  }
+  & li:nth-child(3) {
+    background-color: $color-green-light;
+  }
+  & li:last-child {
+    background-color: $color-yellow-light;
+  }
+
+  & li:first-child {
+    background-color: $color-purple;
+  }
+}
+
+.boolean_cards {
+  grid-template-columns: 1fr 1fr;
+  & li {
+    padding: 20px;
+  }
+}
+
+.countBox {
+  margin: 0 auto;
+  text-align: center;
+  font-family: $font-display;
+}
+
+.correct_message {
+  color: $color-dark-orange;
+  text-align: center;
+  font-weight: 600;
+}
+
+.message_box {
+  display: absolute;
+  bottom: 0;
+  margin: 30px auto 0;
+  background-color: #fff;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 1000px;
+  outline: 1px $color-dark-orange solid;
+  outline-offset: 2px;
+  border: 1px solid $color-dark-orange;
+  animation: scale ease 1s infinite;
+}
+
+@keyframes scale {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.2;
+  }
+  100% {
+    scale: 1;
+  }
+}

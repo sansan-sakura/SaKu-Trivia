@@ -5,10 +5,9 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.header_inner}>
-        <h1> Trevia 🤪</h1>
-        <nav>
-          <NavLink to="/">Home</NavLink>
-        </nav>
+        <NavLink to="/">
+          <h1> SaKu Trivia 🦄</h1>
+        </NavLink>
       </div>
     </header>
   );
