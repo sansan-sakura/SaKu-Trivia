@@ -39,9 +39,10 @@ export const questionCategory = [
 
 export const questionDifficulty = ["Easy", "Medium", "Hard"];
 
-export const gifsUrl =
-  "https://api.giphy.com/v1/gifs/random?api_key=uoBhSUI4kcwMcbfAG9GsekDADUpBOmbg&tag=&rating=g";
+const API_KEY = import.meta.env.VITE_ANY_KEY;
+
+export const gifsUrl = `https://api.giphy.com/v1/gifs/random?api_key=${API_KEY}&tag=&rating=g`;
 
 export function createGifsUrl(query) {
-  return `https://api.giphy.com/v1/gifs/search?api_key=uoBhSUI4kcwMcbfAG9GsekDADUpBOmbg&q=${query}&limit=5&offset=0&rating=g&lang=en&bundle=messaging_non_clips`;
+  return `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=5&offset=0&rating=g&lang=en&bundle=messaging_non_clips`;
 }
