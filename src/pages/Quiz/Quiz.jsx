@@ -6,6 +6,7 @@ import he from "he";
 
 import styles from "./Quiz.module.scss";
 import { Button } from "../../components/Button/Button";
+import { ProgressBar } from "../../components/ProgressBar";
 
 export const Quiz = () => {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ export const Quiz = () => {
 
   const { question, correct_answer, incorrect_answers, type } = currentQuestion;
   function handleCheckAnswer(option) {
+    if (isClicked === "") return alert("Please choose one");
     if (isClicked === correct_answer) {
       dispatch({ type: "question/countCorrect" });
     }
@@ -43,7 +45,7 @@ export const Quiz = () => {
     });
   }
   function handleClickSubmit() {
-    setIsClicked(false);
+    setIsClicked("");
     dispatch({ type: "question/nextQuestion" });
   }
 
@@ -51,8 +53,10 @@ export const Quiz = () => {
     <div className={styles.quiz}>
       <div className={styles.quiz_inner}>
         <Heading>Quiz # {currentQuestionIndex + 1}</Heading>
+        <ProgressBar />
         <div className={styles.board}>
-          <h2>{question}</h2>
+          <h2>{he.decode(question)}</h2>
+
           {type === "boolean" ? (
             <BooleanCard
               setIsClicked={setIsClicked}
@@ -72,10 +76,16 @@ export const Quiz = () => {
             />
           )}
         </div>
-        {isCorrect && <p>Crrect!!</p>}
+        {isCorrect && (
+          <div className={styles.message_box}>
+            <p className={styles.correct_message}>Crrect!!</p>
+          </div>
+        )}
         {!isAnswered && <Button handleClick={handleCheckAnswer}>Show Answer</Button>}
         {isAnswered && <Button handleClick={handleClickSubmit}>Next Question</Button>}
-        <div>Your correct answers : {howManyCorrects}</div>
+        <div className={styles.countBox}>
+          <p>How many time you answered correctly : {howManyCorrects}</p>
+        </div>
       </div>
     </div>
   );
@@ -87,7 +97,7 @@ function BooleanCard({ setIsClicked, isAnswered, correct, isClicked }) {
       <ul className={styles.boolean_cards}>
         <li
           className={`${styles.true} ${isAnswered && correct === "True" ? styles.correct : ""}`}
-          style={{ outline: isClicked === "True" ? " #3b82f6 solid 3px" : "" }}
+          style={{ outline: isClicked === "True" ? " #7c2d12 solid 3px" : "" }}
         >
           <button value="True" onClick={(e) => setIsClicked(e.target.value)}>
             True
@@ -95,7 +105,7 @@ function BooleanCard({ setIsClicked, isAnswered, correct, isClicked }) {
         </li>
         <li
           className={`${styles.false} ${isAnswered && correct === "False" ? styles.correct : ""}`}
-          style={{ outline: isClicked === "False" ? " #3b82f6 solid 3px" : "" }}
+          style={{ outline: isClicked === "False" ? " #7c2d12 solid 3px" : "" }}
         >
           <button value="False" onClick={(e) => setIsClicked(e.target.value)}>
             False
@@ -122,11 +132,11 @@ function MultipleCard({ correct, incorrect, setIsClicked, isAnswered, isClicked 
             }`}
             key={answer}
             style={{
-              outline: isClicked === answer ? " #3b82f6 solid 3px" : "",
+              outline: isClicked === answer ? " #7c2d12 solid 3px" : "",
             }}
           >
             <button onClick={(e) => setIsClicked(e.target.value)} value={answer}>
-              {answer}
+              {he.decode(answer)}
             </button>
           </li>
         ))}

@@ -20,7 +20,7 @@ function reducer(state, action) {
   switch (action.type) {
     case "question/category":
       return {
-        ...state,
+        ...initialState,
         category: action.payload,
       };
     case "question/difficulty":

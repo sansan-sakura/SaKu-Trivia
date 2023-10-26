@@ -88,3 +88,39 @@
     padding: 20px;
   }
 }
+
+.countBox {
+  margin: 0 auto;
+  text-align: center;
+  font-family: $font-display;
+}
+
+.correct_message {
+  color: $color-dark-orange;
+  text-align: center;
+  font-weight: 600;
+}
+
+.message_box {
+  margin: 30px auto 0;
+  background-color: $color-yellow-light;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 1000px;
+  outline: 3px $color-dark-orange solid;
+  outline-offset: 2px;
+  border: 1px solid $color-dark-orange;
+  animation: scale ease 1s infinite;
+}
+
+@keyframes scale {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.3;
+  }
+  100% {
+    scale: 1;
+  }
+}
