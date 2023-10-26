@@ -9,7 +9,7 @@ export const Home = () => {
       <div className={styles.inner_home}>
         <Heading>Welcome to SaKu Trivia 🐲</Heading>
         <div className={styles.iframe_wrapper}>
-          <Gifs url={url} />
+          <Gifs url={url} id="home" />
         </div>
         <Button to="/Start">Start</Button>
       </div>

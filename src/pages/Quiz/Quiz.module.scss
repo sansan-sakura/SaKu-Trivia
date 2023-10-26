@@ -45,6 +45,10 @@
     border-radius: 10px;
     cursor: pointer;
   }
+
+  & button:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .correct {
@@ -102,12 +106,14 @@
 }
 
 .message_box {
+  display: absolute;
+  bottom: 0;
   margin: 30px auto 0;
-  background-color: $color-yellow-light;
+  background-color: #fff;
   width: fit-content;
   padding: 10px;
   border-radius: 1000px;
-  outline: 3px $color-dark-orange solid;
+  outline: 1px $color-dark-orange solid;
   outline-offset: 2px;
   border: 1px solid $color-dark-orange;
   animation: scale ease 1s infinite;
@@ -118,7 +124,7 @@
     scale: 1;
   }
   50% {
-    scale: 1.3;
+    scale: 1.2;
   }
   100% {
     scale: 1;

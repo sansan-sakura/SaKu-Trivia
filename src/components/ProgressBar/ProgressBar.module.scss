@@ -13,6 +13,7 @@
   position: absolute;
   left: 0;
   height: 6px;
+  transition: all 0.3s ease;
   background: linear-gradient(
     to right top,
     $color-purple,

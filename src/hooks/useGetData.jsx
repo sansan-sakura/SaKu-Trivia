@@ -13,8 +13,8 @@ export const useGetData = (difficulty, id) => {
   return { data, error, isLoading };
 };
 
-export const useGifs = (url) => {
-  const { data, error, isLoading } = useSWR("/get/gifs", () => fetcher(url));
+export const useGifs = (url, id) => {
+  const { data, error, isLoading } = useSWR(`/get/gifs/${id}`, () => fetcher(url));
 
   return { data, error, isLoading };
 };

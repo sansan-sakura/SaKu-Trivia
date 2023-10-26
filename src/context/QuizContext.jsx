@@ -14,6 +14,7 @@ const initialState = {
   howManyCorrects: 0,
   isAnswered: false,
   isCorrect: false,
+  lastQuestion: false,
 };
 
 function reducer(state, action) {
@@ -68,6 +69,11 @@ function reducer(state, action) {
         answeredResults: [...state.answeredResults, action.payload],
         isAnswered: true,
       };
+    case "question/lastQuestion":
+      return {
+        ...state,
+        lastQuestion: true,
+      };
     default:
       throw new Error(" type is not declared");
   }
@@ -90,6 +96,7 @@ const QuizProvider = ({ children }) => {
       howManyCorrects,
       isCorrect,
       isAnswered,
+      lastQuestion,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
@@ -116,6 +123,7 @@ const QuizProvider = ({ children }) => {
         howManyCorrects,
         isCorrect,
         isAnswered,
+        lastQuestion,
         dispatch,
       }}
     >

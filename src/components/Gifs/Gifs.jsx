@@ -1,11 +1,14 @@
 import styles from "./Gifs.module.scss";
 import { useGifs } from "../../hooks/useGetData";
-export const Gifs = ({ url }) => {
-  const { data, error, isLoading } = useGifs(url);
-  if (isLoading) return <p>Loading...</p>;
+import { Loading } from "../Loading";
+export const Gifs = ({ url, id }) => {
+  const { data, error, isLoading } = useGifs(url, id);
+  if (isLoading) return <Loading />;
+  const urlData = data.data.length && data.data.length > 0 ? data.data[4] : data.data;
+
   return (
     <>
-      <iframe className={styles.iframe} src={data.data.embed_url} allow="encrypted-media;"></iframe>
+      <iframe className={styles.iframe} src={urlData.embed_url} allow="encrypted-media;"></iframe>
       <div className={styles.cover}></div>
     </>
   );

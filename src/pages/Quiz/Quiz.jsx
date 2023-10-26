@@ -20,6 +20,7 @@ export const Quiz = () => {
     howManyCorrects,
     isCorrect,
     isAnswered,
+    lastQuestion,
   } = useQuiz();
 
   const [isClicked, setIsClicked] = useState("");
@@ -32,23 +33,30 @@ export const Quiz = () => {
       return navigate("/Start");
     }
   }, [fetchError, loading, questions, navigate]);
+  const { question, correct_answer, incorrect_answers, type } = useMemo(() => {
+    const { question, correct_answer, incorrect_answers, type } = currentQuestion;
+    return { question, correct_answer, incorrect_answers, type };
+  }, [currentQuestion]);
 
-  const { question, correct_answer, incorrect_answers, type } = currentQuestion;
   function handleCheckAnswer(option) {
     if (isClicked === "") return alert("Please choose one");
-    if (isClicked === correct_answer) {
-      dispatch({ type: "question/countCorrect" });
+    else {
+      if (isClicked === correct_answer) {
+        dispatch({ type: "question/countCorrect" });
+      }
+      if (currentQuestionIndex === questions.length - 1)
+        dispatch({ type: "question/lastQuestion" });
+
+      dispatch({
+        type: "question/submitAnswer",
+        payload: { ...questions[currentQuestionIndex], option },
+      });
     }
-    dispatch({
-      type: "question/submitAnswer",
-      payload: { ...questions[currentQuestionIndex], option },
-    });
   }
   function handleClickSubmit() {
     setIsClicked("");
     dispatch({ type: "question/nextQuestion" });
   }
-
   return (
     <div className={styles.quiz}>
       <div className={styles.quiz_inner}>
@@ -75,14 +83,18 @@ export const Quiz = () => {
               isClicked={isClicked}
             />
           )}
+          {isCorrect && (
+            <div className={styles.message_box}>
+              <p className={styles.correct_message}>Yeah! Crrect 🦄</p>
+            </div>
+          )}
         </div>
-        {isCorrect && (
-          <div className={styles.message_box}>
-            <p className={styles.correct_message}>Crrect!!</p>
-          </div>
-        )}
+
         {!isAnswered && <Button handleClick={handleCheckAnswer}>Show Answer</Button>}
-        {isAnswered && <Button handleClick={handleClickSubmit}>Next Question</Button>}
+        {isAnswered && !lastQuestion && (
+          <Button handleClick={handleClickSubmit}>Next Question</Button>
+        )}
+        {lastQuestion && <Button to="/Result">Finish Quiz</Button>}
         <div className={styles.countBox}>
           <p>How many time you answered correctly : {howManyCorrects}</p>
         </div>
@@ -99,7 +111,7 @@ function BooleanCard({ setIsClicked, isAnswered, correct, isClicked }) {
           className={`${styles.true} ${isAnswered && correct === "True" ? styles.correct : ""}`}
           style={{ outline: isClicked === "True" ? " #7c2d12 solid 3px" : "" }}
         >
-          <button value="True" onClick={(e) => setIsClicked(e.target.value)}>
+          <button value="True" onClick={(e) => setIsClicked(e.target.value)} disabled={isAnswered}>
             True
           </button>
         </li>
@@ -107,7 +119,7 @@ function BooleanCard({ setIsClicked, isAnswered, correct, isClicked }) {
           className={`${styles.false} ${isAnswered && correct === "False" ? styles.correct : ""}`}
           style={{ outline: isClicked === "False" ? " #7c2d12 solid 3px" : "" }}
         >
-          <button value="False" onClick={(e) => setIsClicked(e.target.value)}>
+          <button value="False" onClick={(e) => setIsClicked(e.target.value)} disabled={isAnswered}>
             False
           </button>
         </li>
@@ -135,7 +147,11 @@ function MultipleCard({ correct, incorrect, setIsClicked, isAnswered, isClicked 
               outline: isClicked === answer ? " #7c2d12 solid 3px" : "",
             }}
           >
-            <button onClick={(e) => setIsClicked(e.target.value)} value={answer}>
+            <button
+              onClick={(e) => setIsClicked(e.target.value)}
+              value={answer}
+              disabled={isAnswered}
+            >
               {he.decode(answer)}
             </button>
           </li>

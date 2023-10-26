@@ -2,10 +2,9 @@ import { useQuiz } from "../../context/QuizContext";
 import { useState } from "react";
 import styles from "./Select.module.scss";
 import { questionDifficulty as diff } from "../../statics/chooseQuestion";
-import { Link } from "react-router-dom";
 import { Heading } from "../../components/Heading";
 import { Button } from "../../components/Button";
-import { gifsUrl } from "../../statics/chooseQuestion";
+import { createGifsUrl } from "../../statics/chooseQuestion";
 import { Gifs } from "../../components/Gifs";
 
 export const Select = () => {
@@ -20,7 +19,7 @@ export const Select = () => {
     <section className={styles.select}>
       <Heading>Choose difficulty of the Quiz</Heading>
       <div className={styles.gifs_wrapper}>
-        <Gifs url={gifsUrl} />
+        <Gifs url={createGifsUrl("difficulty")} id="select" />
       </div>
 
       <ul className={styles.select_inner}>
