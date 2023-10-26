@@ -23,10 +23,11 @@ export function Start() {
             key={cate.id}
             className={styles.btn_wrapper}
             style={{
-              outline: isChosen && cate.id === category ? "green 4px solid" : "",
+              outline: isChosen && cate.id === category ? "#fbbf24 4px solid" : "",
+              outlineOffset: isChosen && cate.id === category ? "2px" : "",
             }}
           >
-            <button onClick={(e) => handleChoose(cate.id)} value={cate.id}>
+            <button onClick={() => handleChoose(cate.id)} value={cate.id}>
               {cate.name}
             </button>
           </li>

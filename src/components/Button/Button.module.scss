@@ -1,13 +1,15 @@
 @use "../../styles/variables.scss" as *;
 .button {
+  font-family: $font-text;
   width: fit-content;
   display: block;
   margin: 60px auto;
   padding: 10px 30px;
-  font-size: 20px;
+  font-size: 22px;
   background-color: $color-yellow;
   border-radius: 3px;
   transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 .button:hover {

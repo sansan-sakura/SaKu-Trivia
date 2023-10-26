@@ -3,14 +3,17 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 import { useGetData } from "../hooks/useGetData";
 
 const initialState = {
-  category: "",
-  difficulty: "",
-  answers: "",
+  category: "9",
+  difficulty: "hard",
   questions: [],
   fetchError: {},
   loading: false,
   currentQuestionIndex: 0,
   answeredResults: [],
+  currentQuestion: {},
+  howManyCorrects: 0,
+  isAnswered: false,
+  isCorrect: false,
 };
 
 function reducer(state, action) {
@@ -30,6 +33,7 @@ function reducer(state, action) {
         ...state,
         loading: false,
         questions: action.payload,
+        currentQuestion: action.payload[state.currentQuestionIndex],
       };
     case "question/setError":
       return {
@@ -48,11 +52,21 @@ function reducer(state, action) {
       return {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
+        currentQuestion: state.questions[state.currentQuestionIndex + 1],
+        isAnswered: false,
+        isCorrect: false,
+      };
+    case "question/countCorrect":
+      return {
+        ...state,
+        howManyCorrects: state.howManyCorrects + 1,
+        isCorrect: true,
       };
     case "question/submitAnswer":
       return {
         ...state,
         answeredResults: [...state.answeredResults, action.payload],
+        isAnswered: true,
       };
     default:
       throw new Error(" type is not declared");
@@ -72,6 +86,10 @@ const QuizProvider = ({ children }) => {
       loading,
       currentQuestionIndex,
       answeredResults,
+      currentQuestion,
+      howManyCorrects,
+      isCorrect,
+      isAnswered,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
@@ -94,6 +112,10 @@ const QuizProvider = ({ children }) => {
         loading,
         currentQuestionIndex,
         answeredResults,
+        currentQuestion,
+        howManyCorrects,
+        isCorrect,
+        isAnswered,
         dispatch,
       }}
     >

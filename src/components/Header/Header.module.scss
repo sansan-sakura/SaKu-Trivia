@@ -8,9 +8,10 @@
   font-family: $font-display;
 
   &_inner {
-    display: flex;
+    padding-left: 60px;
+    display: grid;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     max-width: 1200px;
     height: 100%;
     width: 100%;
@@ -19,10 +20,7 @@
 }
 
 .header h1 {
+  margin: 0 auto;
   font-size: 3rem;
   font-weight: 800;
-}
-
-.header nav {
-  font-size: 1.5rem;
 }
