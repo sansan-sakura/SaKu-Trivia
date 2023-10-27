@@ -2,7 +2,7 @@ import styles from "./Gifs.module.scss";
 import { useGifs } from "../../hooks/useGetData";
 import { Loading } from "../Loading";
 export const Gifs = ({ url, id }) => {
-  const { data, error, isLoading } = useGifs(url, id);
+  const { data, isLoading } = useGifs(url, id);
   if (isLoading) return <Loading />;
   const urlData = data.data.length && data.data.length > 0 ? data.data[4] : data.data;
 

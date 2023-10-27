@@ -1,4 +1,5 @@
 @use "../../styles/variables.scss" as *;
+@use "../../styles/mixins.scss" as *;
 
 .header {
   min-height: 100px;
@@ -8,7 +9,6 @@
   font-family: $font-display;
 
   &_inner {
-    padding-left: 60px;
     display: grid;
     align-items: center;
     justify-content: center;
@@ -16,6 +16,9 @@
     height: 100%;
     width: 100%;
     margin: 0 auto;
+
+    @include sm {
+    }
   }
 }
 

@@ -7,6 +7,7 @@ import he from "he";
 import styles from "./Quiz.module.scss";
 import { Button } from "../../components/Button/Button";
 import { ProgressBar } from "../../components/ProgressBar";
+import { Loading } from "../../components/Loading";
 
 export const Quiz = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export const Quiz = () => {
   const [isClicked, setIsClicked] = useState("");
 
   useEffect(() => {
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading />;
     if (fetchError.error) return <p>{fetchError.message}</p>;
     if (questions === undefined || questions?.length === 0) {
       alert("Sorry, couldn't find a sutable quiz.");
