@@ -2,8 +2,6 @@
 @use "../../styles/mixins.scss" as *;
 
 .quiz {
-  min-height: 100vh;
-  min-width: 100vw;
   padding-inline: 10px;
   &_inner {
     min-width: 320px;
