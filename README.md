@@ -1,18 +1,13 @@
-<h1 align="center">
-  <a href="">
-    <img src="/src/assets/quiz.svg" alt="Project Banner Image">
-  </a>
-</h1>
 
 # State Management Quiz
 
-Replace this readme with your own information about your project.
-
-Start by briefly describing the assignment in a sentence or two. Keep it short and to the point.
-
+This is a personal project with the aim of practicing the global state management tool of React. 
+It is connected to a trivia API( https://opentdb.com/api_config.php). 
 ## Getting Started with the Project
 
 ### Dependency Installation & Startup Development Server
+
+
 
 Once cloned, navigate to the project's root directory and this project uses npm (Node Package Manager) to manage its dependencies.
 
@@ -24,15 +19,9 @@ npm i && code . && npm run dev
 
 ### The Problem
 
-Describe how you approached to problem, and what tools and techniques you used to solve it. How did you plan? What technologies did you use? If you had more time, what would be next?
+I had some issues with grasping what the global state management tool is and how to work with them. So I also did some more mini-projects to practice before I started this project. I used for this project, Context API and useReducer to have more experience with the useReducer hook, as it can be useful to get started with Redux. I think there could be better writing and lots of improvements needed, but for now, I did my best.
 
-### View it live
+I struggled the most with React behavior when re-rendering.
+I found that sometimes, useMemo works great to prevent unnecessary and unwanting re-rendering. (for example, it re-renders when one of the choice buttons is clicked in quiz form so that the button index changes. That was a huge problem, as UI also changed.) There are still tons to learn, but overall it was a good practice and fun to play around with the global state management tool.. 
 
-Every project should be deployed somewhere. Be sure to include the link to the deployed project so that the viewer can click around and see what it's all about.
 
-## Instructions
-
-<a href="instructions.md">
-   See instructions of this project
-  </a>
-# react-quiz
