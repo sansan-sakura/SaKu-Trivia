@@ -1,29 +1,52 @@
 @use "../../styles/variables.scss" as *;
+@use "../../styles/mixins.scss" as *;
 
 .quiz {
+  min-height: 100vh;
+  min-width: 100vw;
+  padding-inline: 10px;
   &_inner {
-    padding-top: 30px;
+    min-width: 320px;
+    min-height: 300px;
+    margin: 0 auto;
+    @media (min-width: 500px) {
+      width: 450px;
+    }
+
+    @include sm {
+      width: 560px;
+      height: 400px;
+    }
   }
 }
 
 .board {
-  font-size: 20px;
+  font-size: 16px;
   text-align: center;
   font-family: $font-text;
-  margin: 0 auto;
-  width: 560px;
-  height: 400px;
-  padding: 20px 30px;
+  padding: 14px 20px;
   border: 2px solid #fff;
   line-height: 1.8;
   border-radius: 5px;
+
+  @include sm {
+    padding: 20px 30px;
+    font-size: 20px;
+    width: 560px;
+    height: 400px;
+  }
 
   & h2 {
     border: 1px solid #fff;
     border-radius: 5px;
     font-weight: 500;
-    font-size: 22px;
-    padding: 6px 10px;
+    font-size: 18px;
+    padding: 4px 6px;
+
+    @include sm {
+      font-size: 22px;
+      padding: 6px 10px;
+    }
   }
 
   & ul {

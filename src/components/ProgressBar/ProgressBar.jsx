@@ -1,4 +1,5 @@
 import { useQuiz } from "../../context/QuizContext";
+
 import styles from "./ProgressBar.module.scss";
 
 export const ProgressBar = () => {
@@ -14,7 +15,7 @@ export const ProgressBar = () => {
       <div className={styles.progressBar_outer}>
         <div
           className={styles.progressBar_inner}
-          style={{ width: (questionNum / length) * 560 }}
+          style={{ width: (questionNum / length) * 100 + "%" }}
         ></div>
       </div>
     </div>

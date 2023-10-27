@@ -3,8 +3,8 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 import { useGetData } from "../hooks/useGetData";
 
 const initialState = {
-  category: "9",
-  difficulty: "hard",
+  category: "",
+  difficulty: "",
   questions: [],
   fetchError: {},
   loading: false,

@@ -1,3 +1,5 @@
+const API_KEY = import.meta.env.VITE_ANY_KEY;
+
 export const questionCategory = [
   {
     id: 9,
@@ -38,8 +40,6 @@ export const questionCategory = [
 ];
 
 export const questionDifficulty = ["Easy", "Medium", "Hard"];
-
-const API_KEY = import.meta.env.VITE_ANY_KEY;
 
 export const gifsUrl = `https://api.giphy.com/v1/gifs/random?api_key=${API_KEY}&tag=&rating=g`;
 

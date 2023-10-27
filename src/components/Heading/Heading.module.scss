@@ -1,10 +1,15 @@
 @use "../../styles/variables.scss" as *;
+@use "../../styles/mixins.scss" as *;
 
 .h2 {
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 600;
   text-align: center;
   font-family: $font-display;
   color: $color-stone;
   margin-bottom: 30px;
+
+  @include sm {
+    font-size: 40px;
+  }
 }
